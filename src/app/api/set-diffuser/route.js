@@ -14,6 +14,7 @@ export async function POST(request) {
     const tuyaApi = getTuyaApi();
     const body = await request.json();
     const { value } = body;
+    console.log('Setting diffuser to', value);
     const result = await tuyaApi.request({
       method: 'POST',
       path: '/v1.0/devices/' + process.env.TUYA_DEVICE_ID + '/commands',
@@ -21,7 +22,7 @@ export async function POST(request) {
         commands: [
           {
             code: 'switch_spray',
-            value: value
+            value: value === 'true' ? true : false
           }
         ]
       }
